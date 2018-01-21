@@ -12,6 +12,10 @@ export default class Output extends Component {
   
     }
 
+    removeItem = (itemId) => {
+      this.props.removeItem(itemId)
+    }
+
     render(){
 
         console.log(this.props)
@@ -38,7 +42,7 @@ export default class Output extends Component {
                 <Table.Cell>{item.itemId}</Table.Cell>
                 <Table.Cell>{item.descp}</Table.Cell>
                 <Table.Cell>{item.qty}</Table.Cell>
-                <Table.Cell><Button>Remove</Button></Table.Cell>
+                <Table.Cell><Button onClick={()=>this.props.removeItem(item.itemId)}>Remove</Button></Table.Cell>
               </Table.Row>
             )}
             )}

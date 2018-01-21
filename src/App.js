@@ -18,10 +18,12 @@ class App extends Component {
 
   componentDidMount(){
 //    localStorage.removeItem("items")
-    const existingItems = JSON.parse(localStorage.getItem("items"))
+    const existingState = JSON.parse(localStorage.getItem("items"))
+    const existingItems = existingState.itemArray
     console.log(existingItems)
-
-    if(existingItems === Array){
+    
+    if(Array.isArray(existingItems)){
+      console.log("I found an array")
       this.setState({itemArray: existingItems})
     }
 
@@ -32,16 +34,31 @@ class App extends Component {
   }
 
   addItemToArray = (item) => {
+
     let array = this.state.itemArray
 
     array.push(item)
 
+    this.updateState(array)
+
+  }
+
+  removeItemArray = (itemId) => {
+    let array = this.state.itemArray.filter(item=>{
+      if(item.itemId === itemId){
+        return false
+      } else {
+        return true
+      }
+    })
+
+    this.updateState(array)
+
+  }
+
+  updateState = (array) => {
     this.setState({itemArray: array})
-
-    localStorage.setItem("items",JSON.stringify(array))
-
-    //console.log(array)
-
+    localStorage.setItem("items",JSON.stringify({itemArray:array}))
   }
 
   buttonClick = () => {
@@ -62,7 +79,7 @@ class App extends Component {
             <Input addItemToArray={this.addItemToArray}/>
           </GridColumn>
           <GridColumn>
-          <Output data1={this.state.itemArray}/>
+          <Output removeItem={this.removeItemArray} data1={this.state.itemArray}/>
           </GridColumn>
           <GridColumn>
           </GridColumn>
