@@ -16,12 +16,29 @@ class App extends Component {
 
   }
 
+  componentDidMount(){
+//    localStorage.removeItem("items")
+    const existingItems = JSON.parse(localStorage.getItem("items"))
+    console.log(existingItems)
+
+    if(existingItems === Array){
+      this.setState({itemArray: existingItems})
+    }
+
+    // if(typeof existingItems === "object"){
+    //   this.setState({itemArray: existingItems})
+    // }
+
+  }
+
   addItemToArray = (item) => {
     let array = this.state.itemArray
 
     array.push(item)
 
     this.setState({itemArray: array})
+
+    localStorage.setItem("items",JSON.stringify(array))
 
     //console.log(array)
 

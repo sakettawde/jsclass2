@@ -21,8 +21,14 @@ export default class Input extends Component {
         const itemObj = { itemId, descp, qty }
 
         //console.log(itemObj)
-
         this.props.addItemToArray(itemObj)
+
+        this.setState({
+            itemId: "",
+            descp: "",
+            qty: ""
+        })
+
     }
 
     render(){
@@ -42,6 +48,7 @@ export default class Input extends Component {
             <Form.Input
             label="Item Qty"
             onChange={(e)=>this.setState({ qty: e.target.value})}
+            type="number"
             value={this.state.qty}>
             </Form.Input>
             <Button onClick={this.addItem} primary>Add Item</Button>
